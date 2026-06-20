@@ -1,0 +1,6 @@
+@LngUnloadingManagement.WebApi_HostAddress = http://localhost:5103
+
+GET {{LngUnloadingManagement.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
