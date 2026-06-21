@@ -93,6 +93,8 @@ import { BerthPlan } from '../../models/berth-plan.model';
             </dxi-item>
             <dxi-item dataField="cause" label="原因分析" editorType="dxTextArea"
               [editorOptions]="{ height: 60 }"></dxi-item>
+            <dxi-item dataField="recoveryCondition" label="恢复前置条件" editorType="dxTextArea"
+              [editorOptions]="{ height: 80 }"></dxi-item>
             <dxi-item dataField="recoveryMeasures" label="处置措施" editorType="dxTextArea"
               [editorOptions]="{ height: 60 }"></dxi-item>
             <dxi-item dataField="operator" label="操作员"></dxi-item>

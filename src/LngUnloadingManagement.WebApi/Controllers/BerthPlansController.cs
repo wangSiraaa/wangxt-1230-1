@@ -30,6 +30,14 @@ public class BerthPlansController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("{id:guid}/detail")]
+    public async Task<ActionResult<BerthPlanDetailDto>> GetDetailById(Guid id)
+    {
+        var result = await _service.GetDetailByIdAsync(id);
+        if (result == null) return NotFound();
+        return Ok(result);
+    }
+
     [HttpGet("planNo/{planNo}")]
     public async Task<ActionResult<BerthPlanDto>> GetByPlanNo(string planNo)
     {

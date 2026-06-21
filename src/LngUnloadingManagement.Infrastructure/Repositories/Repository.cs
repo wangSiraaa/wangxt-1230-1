@@ -73,6 +73,15 @@ public class BerthPlanRepository : Repository<BerthPlan>, IBerthPlanRepository
             .FirstOrDefaultAsync(x => x.PlanNo == planNo);
     }
 
+    public async Task<BerthPlan?> GetWithDetailsByIdAsync(Guid id)
+    {
+        return await _context.BerthPlans
+            .Include(x => x.PipelinePurges)
+            .Include(x => x.MeteringRecords)
+            .Include(x => x.ShutdownEvents)
+            .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
     public override async Task<BerthPlan?> GetByIdAsync(Guid id)
     {
         return await _context.BerthPlans

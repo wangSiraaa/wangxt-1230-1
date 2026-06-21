@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { BerthPlan, CreateBerthPlan, UpdateBerthPlan } from '../models/berth-plan.model';
+import { BerthPlan, BerthPlanDetail, CreateBerthPlan, UpdateBerthPlan } from '../models/berth-plan.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,10 @@ export class BerthPlanService {
 
   getById(id: string): Observable<BerthPlan> {
     return this.http.get<BerthPlan>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+  }
+
+  getDetailById(id: string): Observable<BerthPlanDetail> {
+    return this.http.get<BerthPlanDetail>(`${this.apiUrl}/${id}/detail`, { headers: this.getHeaders() });
   }
 
   getByPlanNo(planNo: string): Observable<BerthPlan> {

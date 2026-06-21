@@ -1,3 +1,7 @@
+import { ShutdownEvent } from './shutdown-event.model';
+import { PipelinePurge } from './pipeline-purge.model';
+import { MeteringRecord } from './metering-record.model';
+
 export enum BerthPlanStatus {
   Draft = 0,
   Scheduled = 1,
@@ -25,6 +29,12 @@ export interface BerthPlan {
   dispatcher?: string;
   status: BerthPlanStatus;
   remark?: string;
+}
+
+export interface BerthPlanDetail extends BerthPlan {
+  shutdownEvents: ShutdownEvent[];
+  pipelinePurges: PipelinePurge[];
+  meteringRecords: MeteringRecord[];
 }
 
 export interface CreateBerthPlan {

@@ -23,6 +23,13 @@ public class BerthPlanDto
     public string? Remark { get; set; }
 }
 
+public class BerthPlanDetailDto : BerthPlanDto
+{
+    public ICollection<ShutdownEventDto> ShutdownEvents { get; set; } = new List<ShutdownEventDto>();
+    public ICollection<PipelinePurgeDto> PipelinePurges { get; set; } = new List<PipelinePurgeDto>();
+    public ICollection<MeteringRecordDto> MeteringRecords { get; set; } = new List<MeteringRecordDto>();
+}
+
 public class CreateBerthPlanDto
 {
     public string PlanNo { get; set; } = string.Empty;

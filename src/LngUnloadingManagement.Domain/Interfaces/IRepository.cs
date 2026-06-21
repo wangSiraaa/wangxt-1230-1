@@ -15,6 +15,7 @@ public interface IBerthPlanRepository : IRepository<BerthPlan>
 {
     Task<IEnumerable<BerthPlan>> GetByStatusAsync(int status);
     Task<BerthPlan?> GetByPlanNoAsync(string planNo);
+    Task<BerthPlan?> GetWithDetailsByIdAsync(Guid id);
 }
 
 public interface IPipelinePurgeRepository : IRepository<PipelinePurge>

@@ -53,6 +53,9 @@ public class ShutdownEventService : IShutdownEventService
         if (berthPlan == null)
             throw new NotFoundException($"靠泊计划 {dto.BerthPlanId} 不存在");
 
+        var recoveryConditionRecorded = !string.IsNullOrWhiteSpace(dto.RecoveryCondition);
+        var status = recoveryConditionRecorded ? ShutdownStatus.Processing : ShutdownStatus.Occurred;
+
         var entity = new ShutdownEvent
         {
             BerthPlanId = dto.BerthPlanId,
@@ -62,9 +65,11 @@ public class ShutdownEventService : IShutdownEventService
             Location = dto.Location,
             Description = dto.Description,
             Cause = dto.Cause,
+            RecoveryCondition = dto.RecoveryCondition,
+            RecoveryMeasures = dto.RecoveryMeasures,
             Operator = dto.Operator,
-            Status = ShutdownStatus.Occurred,
-            RecoveryConditionRecorded = false,
+            Status = status,
+            RecoveryConditionRecorded = recoveryConditionRecorded,
             Remark = dto.Remark,
             CreatedBy = operatorName
         };
@@ -88,6 +93,18 @@ public class ShutdownEventService : IShutdownEventService
         if (dto.Location != null) entity.Location = dto.Location;
         if (dto.Description != null) entity.Description = dto.Description;
         if (dto.Cause != null) entity.Cause = dto.Cause;
+        if (dto.RecoveryCondition != null)
+        {
+            entity.RecoveryCondition = dto.RecoveryCondition;
+            if (!string.IsNullOrWhiteSpace(dto.RecoveryCondition))
+            {
+                entity.RecoveryConditionRecorded = true;
+                if (entity.Status == ShutdownStatus.Occurred)
+                {
+                    entity.Status = ShutdownStatus.Processing;
+                }
+            }
+        }
         if (dto.RecoveryMeasures != null) entity.RecoveryMeasures = dto.RecoveryMeasures;
         if (dto.Operator != null) entity.Operator = dto.Operator;
         if (dto.Status.HasValue) entity.Status = dto.Status.Value;

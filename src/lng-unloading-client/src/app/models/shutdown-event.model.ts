@@ -41,6 +41,8 @@ export interface CreateShutdownEvent {
   location?: string;
   description: string;
   cause?: string;
+  recoveryCondition?: string;
+  recoveryMeasures?: string;
   operator?: string;
   remark?: string;
 }
@@ -52,6 +54,7 @@ export interface UpdateShutdownEvent {
   location?: string;
   description?: string;
   cause?: string;
+  recoveryCondition?: string;
   recoveryMeasures?: string;
   operator?: string;
   status?: ShutdownStatus;

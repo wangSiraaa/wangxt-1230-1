@@ -31,6 +31,8 @@ public class CreateShutdownEventDto
     public string? Location { get; set; }
     public string Description { get; set; } = string.Empty;
     public string? Cause { get; set; }
+    public string? RecoveryCondition { get; set; }
+    public string? RecoveryMeasures { get; set; }
     public string? Operator { get; set; }
     public string? Remark { get; set; }
 }
@@ -43,6 +45,7 @@ public class UpdateShutdownEventDto
     public string? Location { get; set; }
     public string? Description { get; set; }
     public string? Cause { get; set; }
+    public string? RecoveryCondition { get; set; }
     public string? RecoveryMeasures { get; set; }
     public string? Operator { get; set; }
     public ShutdownStatus? Status { get; set; }

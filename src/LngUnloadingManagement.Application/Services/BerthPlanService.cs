@@ -30,6 +30,12 @@ public class BerthPlanService : IBerthPlanService
         return entity == null ? null : MapToDto(entity);
     }
 
+    public async Task<BerthPlanDetailDto?> GetDetailByIdAsync(Guid id)
+    {
+        var entity = await _repository.GetWithDetailsByIdAsync(id);
+        return entity == null ? null : MapToDetailDto(entity);
+    }
+
     public async Task<BerthPlanDto?> GetByPlanNoAsync(string planNo)
     {
         var entity = await _repository.GetByPlanNoAsync(planNo);
@@ -173,6 +179,92 @@ public class BerthPlanService : IBerthPlanService
         Shipper = entity.Shipper,
         Consignee = entity.Consignee,
         Dispatcher = entity.Dispatcher,
+        Status = entity.Status,
+        Remark = entity.Remark
+    };
+
+    private static BerthPlanDetailDto MapToDetailDto(BerthPlan entity) => new()
+    {
+        Id = entity.Id,
+        PlanNo = entity.PlanNo,
+        VesselName = entity.VesselName,
+        VesselImoNo = entity.VesselImoNo,
+        BerthNo = entity.BerthNo,
+        Eta = entity.Eta,
+        Etd = entity.Etd,
+        ActualBerthingTime = entity.ActualBerthingTime,
+        ActualUnloadingStartTime = entity.ActualUnloadingStartTime,
+        ActualUnloadingEndTime = entity.ActualUnloadingEndTime,
+        PlannedQuantity = entity.PlannedQuantity,
+        CargoType = entity.CargoType,
+        Shipper = entity.Shipper,
+        Consignee = entity.Consignee,
+        Dispatcher = entity.Dispatcher,
+        Status = entity.Status,
+        Remark = entity.Remark,
+        ShutdownEvents = entity.ShutdownEvents.Select(MapToShutdownDto).ToList(),
+        PipelinePurges = entity.PipelinePurges.Select(MapToPurgeDto).ToList(),
+        MeteringRecords = entity.MeteringRecords.Select(MapToMeteringDto).ToList()
+    };
+
+    private static ShutdownEventDto MapToShutdownDto(ShutdownEvent entity) => new()
+    {
+        Id = entity.Id,
+        BerthPlanId = entity.BerthPlanId,
+        ShutdownNo = entity.ShutdownNo,
+        ShutdownType = entity.ShutdownType,
+        ShutdownTime = entity.ShutdownTime,
+        ResumeTime = entity.ResumeTime,
+        Duration = entity.Duration,
+        Location = entity.Location,
+        Description = entity.Description,
+        Cause = entity.Cause,
+        RecoveryCondition = entity.RecoveryCondition,
+        RecoveryMeasures = entity.RecoveryMeasures,
+        RecoveryConditionRecorded = entity.RecoveryConditionRecorded,
+        Operator = entity.Operator,
+        Status = entity.Status,
+        Remark = entity.Remark
+    };
+
+    private static PipelinePurgeDto MapToPurgeDto(PipelinePurge entity) => new()
+    {
+        Id = entity.Id,
+        BerthPlanId = entity.BerthPlanId,
+        PurgeNo = entity.PurgeNo,
+        PipelineName = entity.PipelineName,
+        PurgeStartTime = entity.PurgeStartTime,
+        PurgeEndTime = entity.PurgeEndTime,
+        OxygenContent = entity.OxygenContent,
+        OxygenTestTime = entity.OxygenTestTime,
+        OxygenLimit = entity.OxygenLimit,
+        PurgeMedium = entity.PurgeMedium,
+        Pressure = entity.Pressure,
+        Temperature = entity.Temperature,
+        ProcessEngineer = entity.ProcessEngineer,
+        Status = entity.Status,
+        Remark = entity.Remark
+    };
+
+    private static MeteringRecordDto MapToMeteringDto(MeteringRecord entity) => new()
+    {
+        Id = entity.Id,
+        BerthPlanId = entity.BerthPlanId,
+        MeteringNo = entity.MeteringNo,
+        MeteringStartTime = entity.MeteringStartTime,
+        MeteringEndTime = entity.MeteringEndTime,
+        LoadingQuantity = entity.LoadingQuantity,
+        UnloadingQuantity = entity.UnloadingQuantity,
+        ShipFigureQuantity = entity.ShipFigureQuantity,
+        ShoreFigureQuantity = entity.ShoreFigureQuantity,
+        DifferenceAmount = entity.DifferenceAmount,
+        DifferenceRate = entity.DifferenceRate,
+        DifferenceLimitRate = entity.DifferenceLimitRate,
+        IsDifferenceExceeded = entity.IsDifferenceExceeded,
+        MeteringOperator = entity.MeteringOperator,
+        Reviewer = entity.Reviewer,
+        ReviewTime = entity.ReviewTime,
+        ReviewComment = entity.ReviewComment,
         Status = entity.Status,
         Remark = entity.Remark
     };

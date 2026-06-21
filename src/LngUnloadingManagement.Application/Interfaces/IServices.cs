@@ -6,6 +6,7 @@ public interface IBerthPlanService
 {
     Task<IEnumerable<BerthPlanDto>> GetAllAsync();
     Task<BerthPlanDto?> GetByIdAsync(Guid id);
+    Task<BerthPlanDetailDto?> GetDetailByIdAsync(Guid id);
     Task<BerthPlanDto?> GetByPlanNoAsync(string planNo);
     Task<IEnumerable<BerthPlanDto>> GetByStatusAsync(int status);
     Task<BerthPlanDto> CreateAsync(CreateBerthPlanDto dto, string operatorName);

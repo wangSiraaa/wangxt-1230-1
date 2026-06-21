@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { DxDataGridComponent, DxFormComponent } from 'devextreme-angular';
 import { BerthPlanService } from '../../services/berth-plan.service';
 import { BerthPlan, BerthPlanStatus, CreateBerthPlan } from '../../models/berth-plan.model';
@@ -31,7 +32,8 @@ import { BerthPlan, BerthPlanStatus, CreateBerthPlan } from '../../models/berth-
         <div *dxTemplate="let cell of 'statusTemplate'">
           <span [class]="getStatusClass(cell.data.status)">{{ getStatusText(cell.data.status) }}</span>
         </div>
-        <dxi-column type="buttons" caption="操作" width="280">
+        <dxi-column type="buttons" caption="操作" width="360">
+          <dxi-button text="详情" icon="info" (onClick)="viewDetail($event)"></dxi-button>
           <dxi-button text="编辑" icon="edit" (onClick)="editRow($event)"></dxi-button>
           <dxi-button text="开始卸船" icon="play" (onClick)="startUnloading($event)" [visible]="canStartUnloading($event)"></dxi-button>
           <dxi-button text="完成卸船" icon="check" (onClick)="completeUnloading($event)" [visible]="canCompleteUnloading($event)"></dxi-button>
@@ -92,7 +94,10 @@ export class BerthPlanListComponent implements OnInit {
   editingId: string | null = null;
   formData: Partial<CreateBerthPlan> = {};
 
-  constructor(private service: BerthPlanService) { }
+  constructor(
+    private service: BerthPlanService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -102,6 +107,11 @@ export class BerthPlanListComponent implements OnInit {
     this.service.getAll().subscribe(data => {
       this.dataSource = data;
     });
+  }
+
+  viewDetail(e: any): void {
+    const id = e.row.data.id;
+    this.router.navigate(['/berth-plans', id, 'detail']);
   }
 
   showAddPopup(): void {
